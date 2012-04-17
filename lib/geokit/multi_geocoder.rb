@@ -32,7 +32,8 @@ module Geokit
             res = klass.send :geocode, address, options
             return res if res.success?
           rescue
-            logger.error("Something has gone very wrong during geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. Address: #{address}. Provider: #{provider}")
+            logger.error("Something has gone very wrong during geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. Address: #{address}. Provider: #{provider}, Error: #{$!.inspect}")
+            logger.error "Backtrace: #{$@.backtrace.join("\n")}"
           end
         end
         # If we get here, we failed completely.
@@ -49,7 +50,8 @@ module Geokit
             res = klass.send :reverse_geocode, latlng
             return res if res.success?
           rescue
-            logger.error("Something has gone very wrong during reverse geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. LatLng: #{latlng}. Provider: #{provider}")
+            logger.error("Something has gone very wrong during reverse geocoding, OR you have configured an invalid class name in Geokit::Geocoders::provider_order. LatLng: #{latlng}. Provider: #{provider}, Error: #{$!.inspect}")
+            logger.error "Backtrace: #{$@.backtrace.join("\n")}"
           end
         end
         # If we get here, we failed completely.
